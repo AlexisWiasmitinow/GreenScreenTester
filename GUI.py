@@ -19,6 +19,7 @@ def guiThread():
 	while 1:
 		#print("Names: "+str(networker.getClientNames()))
 		gui.updateStatusUpper("Mode: "+guiCommands["mode"])
+		gui.updateStatusLower("File: "+guiCommands["loadedFile"])
 		#selectedClient=gui.selectClientValue.get()
 		root.update()
 		time.sleep(0.1)
@@ -53,17 +54,17 @@ class Window(Frame):
 			self.sliderVdown.set(guiCommands['vValueL'])
 
 			SetRow+=1
-			self.HupLabel=Label(self, text="H Value").grid(row=SetRow, column=0)
+			self.HupLabel=Label(self, text="high H Value").grid(row=SetRow, column=0)
 			self.sliderHup = Scale(self, orient='horizontal', from_=0, to=255, length=slider_Length, command=self.update)
 			self.sliderHup.grid(row=SetRow, column=1, columnspan=2)
 			self.sliderHup.set(guiCommands['hValueH'])
 
-			self.SupLabel=Label(self, text="S Value").grid(row=SetRow, column=3)
+			self.SupLabel=Label(self, text="high S Value").grid(row=SetRow, column=3)
 			self.sliderSup = Scale(self, orient='horizontal', from_=0, to=255, length=slider_Length, command=self.update)
 			self.sliderSup.grid(row=SetRow, column=4, columnspan=2)
 			self.sliderSup.set(guiCommands['sValueH'])
 			
-			self.VupLabel=Label(self, text="V Value").grid(row=SetRow, column=6)
+			self.VupLabel=Label(self, text="high V Value").grid(row=SetRow, column=6)
 			self.sliderVup = Scale(self, orient='horizontal', from_=0, to=255, length=slider_Length, command=self.update)
 			self.sliderVup.grid(row=SetRow, column=7, columnspan=2)
 			self.sliderVup.set(guiCommands['vValueH'])
@@ -73,7 +74,7 @@ class Window(Frame):
 			self.upperStatusText=StringVar()
 			self.statusLabelUpper=Label(self, textvariable=self.upperStatusText).grid(row=SetRow, column=0,columnspan=2)
 			self.lowerStatusText=StringVar()
-			self.statusLabelLower=Label(self, textvariable=self.lowerStatusText).grid(row=SetRow, column=2,columnspan=2)
+			self.statusLabelLower=Label(self, textvariable=self.lowerStatusText).grid(row=SetRow, column=2,columnspan=4)
 			SetRow+=1
 			SetCol=0
 			self.nextPicText=StringVar()
@@ -84,11 +85,13 @@ class Window(Frame):
 			Button(self, textvariable=self.previousPicText, command=self.previousPicSwitch).grid(row=SetRow, column=SetCol,columnspan=2)
 			self.previousPicText.set("Previous Pic")
 			SetCol+=2
-			Button(self, text="Save", command=self.save).grid(row=SetRow, column=SetCol,columnspan=1)
+			Button(self, text="Save Settings", command=self.save).grid(row=SetRow, column=SetCol,columnspan=1)
 			SetCol+=1
 			#SetRow+=1
 			#SetCol=0
 			Button(self, text="Exit", command=self.client_exit).grid(row=SetRow, column=SetCol,columnspan=2)
+			SetCol+=2
+			Button(self, text="Select Folder", command=self.selectFolder).grid(row=SetRow, column=SetCol,columnspan=2)
 			SetRow+=1
 			self.settingsText=StringVar()
 			self.settingsLabel=Label(self, textvariable=self.settingsText).grid(row=SetRow, column=0,columnspan=9)
@@ -108,6 +111,12 @@ class Window(Frame):
 		f = open("setup.py", "w")
 		f.write("guiCommands="+str(guiCommands))
 		f.close()
+
+	def selectFolder(self):
+		print("Select Folder")
+		folderName= filedialog.askdirectory()
+		guiCommands['imageFolder']=folderName
+		print("folder: ",folderName)
 
 	def nextPicSwitch(self):
 		guiCommands['mode']="nextPic"

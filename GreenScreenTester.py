@@ -7,7 +7,7 @@ from GUI import *
 
 preview_scale_factor=0.8
 font = cv2.FONT_HERSHEY_SIMPLEX
-imageFolder='../GreenscreenPics/'
+
 
 def getFileList(folder):
 	fileList={}
@@ -37,20 +37,28 @@ i=0
 runLoop = True
 #for i in range(1,100):
 while(guiCommands['runLoop']):
-	#filename=imageFolder+str(i).zfill(5)+'_1612110796_raw.png'
-	#filename=imageFolder+str(i).zfill(5)+'_1612468791_raw.png'
+	imageFolder=guiCommands['imageFolder']+'/'
 	fileList=getFileList(imageFolder)
-	#print('fileList: ',fileList)
+	#print('length of fileList: ',len(fileList))
 	if i<0:
 		i=0
-	filename=imageFolder+fileList[i]
-	print('loading file: '+filename)
-	input_image = cv2.imread(filename)
+	elif i>=len(fileList):
+		i=0
+	if len(fileList) > 0:
+		print('i',i)
+		fileName=fileList[i]
+		guiCommands['loadedFile']=fileName
+		filePath=imageFolder+fileName
+		print('loading file: '+filePath)
+		input_image = cv2.imread(filePath)
+	else:
+		input_image = None
+		i=0
 	#cv2.imshow('input',input_image)
 	if input_image is not None:
 		dimX , dimY = input_image.shape[:2]
 		blue,green,red = cv2.split(input_image)
-		print('loaded file: '+filename+' i: '+str(i))
+		print('loaded file: '+filePath+' i: '+str(i))
 		hsv =cv2.cvtColor(input_image,cv2.COLOR_BGR2HSV)
 		#orange_red = (12, 255, 255)
 		#pink_red= (0, 150, 150)
@@ -95,7 +103,7 @@ while(guiCommands['runLoop']):
 			#masked_image2 = cv2.bitwise_and(input_image,input_image, mask=mask2)
 			cv2.putText(masked_image,str(light_green),(20,40),font,1,(0,255,0), 1,cv2.LINE_AA)
 			cv2.putText(masked_image,str(dark_green),(20,80),font,1,(0,255,0), 1,cv2.LINE_AA)
-			show_smaller_image(masked_image,'masked '+str(filename),preview_scale_factor)
+			show_smaller_image(masked_image,'masked '+str(fileName),preview_scale_factor)
 			#show_smaller_image(closing,'closed '+str(filename),preview_scale_factor)
 			#show_smaller_image(mask,'mask '+str(filename),preview_scale_factor)
 		#pressedKey=cv2.waitKey(1)
@@ -118,6 +126,3 @@ while(guiCommands['runLoop']):
 			guiCommands['mode']='show'
 		
 		cv2.destroyAllWindows()
-	else:
-		i+=1
-	#cv2.destroyAllWindows()
