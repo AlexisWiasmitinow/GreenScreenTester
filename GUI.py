@@ -13,7 +13,7 @@ global GUI_Message
 def guiThread():
 	#print("setup 1: "+str(networker.getSetup()))
 	root = Tk()
-	root.geometry("1000x300+0+0")
+	root.geometry("900x200+0+0")
 	gui = Window(root)
 	#root.mainloop()
 	while 1:
