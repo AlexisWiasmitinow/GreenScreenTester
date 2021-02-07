@@ -1,0 +1,1 @@
+guiCommands={'hValueL': 0, 'vValueL': 0, 'sValueL': 0, 'hValueH': 255, 'vValueH': 114, 'sValueH': 255, 'angle': 0, 'mode': 'show', 'previewRaw': True, 'runLoop': True}
