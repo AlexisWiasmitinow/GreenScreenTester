@@ -87,10 +87,12 @@ class Window(Frame):
 			SetCol+=2
 			Button(self, text="Save Settings", command=self.save).grid(row=SetRow, column=SetCol,columnspan=1)
 			SetCol+=1
+			Button(self, text="Save Picture", command=self.savePic).grid(row=SetRow, column=SetCol,columnspan=1)
+			SetCol+=1
 			#SetRow+=1
 			#SetCol=0
-			Button(self, text="Exit", command=self.client_exit).grid(row=SetRow, column=SetCol,columnspan=2)
-			SetCol+=2
+			Button(self, text="Exit", command=self.client_exit).grid(row=SetRow, column=SetCol,columnspan=1)
+			SetCol+=1
 			Button(self, text="Select Folder", command=self.selectFolder).grid(row=SetRow, column=SetCol,columnspan=2)
 			SetRow+=1
 			self.settingsText=StringVar()
@@ -120,6 +122,10 @@ class Window(Frame):
 
 	def nextPicSwitch(self):
 		guiCommands['mode']="nextPic"
+		print("Mode: ",guiCommands['mode'])
+	
+	def savePic(self):
+		guiCommands['mode']="savePic"
 		print("Mode: ",guiCommands['mode'])
 			
 	def previousPicSwitch(self):

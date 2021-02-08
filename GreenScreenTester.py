@@ -13,7 +13,7 @@ def getFileList(folder):
 	fileList={}
 	with os.scandir(folder) as allEntries:
 		for entry in allEntries:
-			if entry.name.endswith('.png') and entry.is_file():
+			if entry.name.endswith('.png') and entry.is_file() and not entry.name.startswith('out_'):
 				#print("allEntries: "+str(entry.name))
 				fileList.update([(entry.stat().st_mtime, (entry.name, entry.stat().st_size))])
 	sortedList=sorted(fileList.items(),key=operator.itemgetter(0))
@@ -116,8 +116,9 @@ while(guiCommands['runLoop']):
 			colorString=colorString.replace('(','__')
 			colorString=colorString.replace(')','__')
 			colorString=colorString.replace(',','_')
-			saveName='out_'+str(i).zfill(5)+'_'+str(colorString)+'.png'
+			saveName='out_'+fileName+'_'+str(colorString)+'.png'
 			cv2.imwrite(imageFolder+saveName,masked_image)
+			guiCommands['mode']='show'
 		elif guiCommands['mode']=='previousPic':
 			i-=i
 			guiCommands['mode']='show'
