@@ -1,1 +1,1 @@
-guiCommands={'hValueL': 0, 'vValueL': 0, 'sValueL': 0, 'hValueH': 255, 'vValueH': 114, 'sValueH': 255, 'mode': 'show', 'imageFolder': '', 'runLoop': True,'loadedFile':''}
+guiCommands={'hValueL': 0, 'vValueL': 183, 'sValueL': 0, 'hValueH': 54, 'vValueH': 255, 'sValueH': 255, 'mode': 'show', 'imageFolder': 'C:/Users/wiasm/Google Drive/CountCamera/SW_Development/GreenscreenPics/1612976412', 'runLoop': True, 'loadedFile': '00501_1612976412_raw.png'}

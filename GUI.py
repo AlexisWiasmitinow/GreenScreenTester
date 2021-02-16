@@ -1,5 +1,6 @@
 # coding: utf-8
 from tkinter import *
+from tkinter import filedialog
 from threading import Thread
 #from PIL import Image, ImageTk
 import queue
@@ -77,24 +78,24 @@ class Window(Frame):
 			self.statusLabelLower=Label(self, textvariable=self.lowerStatusText).grid(row=SetRow, column=2,columnspan=4)
 			SetRow+=1
 			SetCol=0
-			self.nextPicText=StringVar()
-			Button(self, textvariable=self.nextPicText, command=self.nextPicSwitch).grid(row=SetRow, column=SetCol,columnspan=2)
-			self.nextPicText.set("Next Pic")
-			SetCol+=2
 			self.previousPicText=StringVar()
-			Button(self, textvariable=self.previousPicText, command=self.previousPicSwitch).grid(row=SetRow, column=SetCol,columnspan=2)
+			Button(self, textvariable=self.previousPicText, command=self.previousPicSwitch).grid(row=SetRow, column=SetCol,columnspan=1)
 			self.previousPicText.set("Previous Pic")
+			SetCol+=1
+			self.nextPicText=StringVar()
+			Button(self, textvariable=self.nextPicText, command=self.nextPicSwitch).grid(row=SetRow, column=SetCol,columnspan=1)
+			self.nextPicText.set("Next Pic")
+			SetCol+=1
+			Button(self, text="Save Settings", command=self.save).grid(row=SetRow, column=SetCol,columnspan=2)
 			SetCol+=2
-			Button(self, text="Save Settings", command=self.save).grid(row=SetRow, column=SetCol,columnspan=1)
-			SetCol+=1
-			Button(self, text="Save Picture", command=self.savePic).grid(row=SetRow, column=SetCol,columnspan=1)
-			SetCol+=1
+			Button(self, text="Save Picture", command=self.savePic).grid(row=SetRow, column=SetCol,columnspan=2)
+			SetCol+=2
 			#SetRow+=1
 			#SetCol=0
-			Button(self, text="Exit", command=self.client_exit).grid(row=SetRow, column=SetCol,columnspan=1)
-			SetCol+=1
 			Button(self, text="Select Folder", command=self.selectFolder).grid(row=SetRow, column=SetCol,columnspan=2)
-			SetRow+=1
+			SetCol+=2
+			Button(self, text="Exit", command=self.client_exit).grid(row=SetRow, column=SetCol,columnspan=1)
+			
 			self.settingsText=StringVar()
 			self.settingsLabel=Label(self, textvariable=self.settingsText).grid(row=SetRow, column=0,columnspan=9)
 			
