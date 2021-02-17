@@ -1,1 +1,1 @@
-guiCommands={'hValueL': 0, 'vValueL': 183, 'sValueL': 0, 'hValueH': 54, 'vValueH': 255, 'sValueH': 255, 'mode': 'show', 'imageFolder': 'C:/Users/wiasm/Google Drive/CountCamera/SW_Development/GreenscreenPics/1612976412', 'runLoop': True, 'loadedFile': '00501_1612976412_raw.png'}
+guiCommands={'hValueL': 0, 'vValueL': 0, 'sValueL': 0, 'hValueH': 97, 'vValueH': 255, 'sValueH': 255, 'mode': 'show', 'imageFolder': 'C:/Users/alexis.wiasmitinow/Google Drive/CountCamera/SW_Development/GreenscreenPics/1613411249', 'runLoop': True, 'loadedFile': '00143_1613411249_raw.png'}

@@ -88,8 +88,10 @@ class Window(Frame):
 			SetCol+=1
 			Button(self, text="Save Settings", command=self.save).grid(row=SetRow, column=SetCol,columnspan=2)
 			SetCol+=2
-			Button(self, text="Save Picture", command=self.savePic).grid(row=SetRow, column=SetCol,columnspan=2)
-			SetCol+=2
+			Button(self, text="Convert All", command=self.convertAll).grid(row=SetRow, column=SetCol,columnspan=1)
+			SetCol+=1
+			Button(self, text="Save Picture", command=self.savePic).grid(row=SetRow, column=SetCol,columnspan=1)
+			SetCol+=1
 			#SetRow+=1
 			#SetCol=0
 			Button(self, text="Select Folder", command=self.selectFolder).grid(row=SetRow, column=SetCol,columnspan=2)
@@ -128,7 +130,11 @@ class Window(Frame):
 	def savePic(self):
 		guiCommands['mode']="savePic"
 		print("Mode: ",guiCommands['mode'])
-			
+
+	def convertAll(self):
+		guiCommands['mode']="convertAll"
+		print("Mode: ",guiCommands['mode'])
+	
 	def previousPicSwitch(self):
 		guiCommands['mode']="previousPic"
 		print("Mode: ",guiCommands['mode'])
