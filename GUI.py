@@ -53,8 +53,8 @@ class Window(Frame):
 			self.sliderVdown = Scale(self, orient='horizontal', from_=0, to=255, length=slider_Length, command=self.update)
 			self.sliderVdown.grid(row=SetRow, column=7, columnspan=2)
 			self.sliderVdown.set(guiCommands['vValueL'])
-
 			SetRow+=1
+
 			self.HupLabel=Label(self, text="high H Value").grid(row=SetRow, column=0)
 			self.sliderHup = Scale(self, orient='horizontal', from_=0, to=255, length=slider_Length, command=self.update)
 			self.sliderHup.grid(row=SetRow, column=1, columnspan=2)
@@ -69,7 +69,24 @@ class Window(Frame):
 			self.sliderVup = Scale(self, orient='horizontal', from_=0, to=255, length=slider_Length, command=self.update)
 			self.sliderVup.grid(row=SetRow, column=7, columnspan=2)
 			self.sliderVup.set(guiCommands['vValueH'])
-			
+			SetRow+=1
+
+			self.LowerThresholdLabel=Label(self, text="lower Threshold").grid(row=SetRow, column=0)
+			self.sliderThreshLow = Scale(self, orient='horizontal', from_=0, to=255, length=slider_Length, command=self.update)
+			self.sliderThreshLow.grid(row=SetRow, column=1, columnspan=2)
+			self.sliderThreshLow.set(guiCommands['threshLow'])
+
+			self.UpperThresholdLabel=Label(self, text="upper Threshold").grid(row=SetRow, column=3)
+			self.sliderThreshUp = Scale(self, orient='horizontal', from_=0, to=255, length=slider_Length, command=self.update)
+			self.sliderThreshUp.grid(row=SetRow, column=4, columnspan=2)
+			self.sliderThreshUp.set(guiCommands['threshUp'])
+
+			self.RadioVar= IntVar()
+			self.RadioHSV=Radiobutton(self,text="Use HSV",variable=self.RadioVar,value=0,command=self.ReadRadio)
+			self.RadioHSV.grid(row=SetRow, column=6)
+			self.RadioThresh=Radiobutton(self,text="Use Threshold",variable=self.RadioVar,value=1,command=self.ReadRadio)
+			self.RadioThresh.grid(row=SetRow, column=7)
+			self.RadioVar.set(guiCommands['useThresh'])
 			SetRow+=1
 
 			self.upperStatusText=StringVar()
@@ -98,8 +115,8 @@ class Window(Frame):
 			SetCol+=2
 			Button(self, text="Exit", command=self.client_exit).grid(row=SetRow, column=SetCol,columnspan=1)
 			
-			self.settingsText=StringVar()
-			self.settingsLabel=Label(self, textvariable=self.settingsText).grid(row=SetRow, column=0,columnspan=9)
+			#self.settingsText=StringVar()
+			#self.settingsLabel=Label(self, textvariable=self.settingsText).grid(row=SetRow, column=0,columnspan=9)
 			
 	def updateStatusLower(self,statusLower):
 		self.lowerStatusText.set(statusLower)
@@ -146,6 +163,12 @@ class Window(Frame):
 		guiCommands['hValueH']=self.sliderHup.get()
 		guiCommands['sValueH']=self.sliderSup.get()
 		guiCommands['vValueH']=self.sliderVup.get()
+		guiCommands['threshUp']=self.sliderThreshUp.get()
+		guiCommands['threshLow']=self.sliderThreshLow.get()
+
+	def ReadRadio(self):
+		print("radio: ",self.RadioVar.get())
+		guiCommands['useThresh']=self.RadioVar.get()
 
 	def client_exit(self):
 		guiCommands['mode']="stop"
