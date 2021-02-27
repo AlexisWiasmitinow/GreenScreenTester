@@ -76,10 +76,10 @@ class Window(Frame):
 			self.sliderThreshLow.grid(row=SetRow, column=1, columnspan=2)
 			self.sliderThreshLow.set(guiCommands['threshLow'])
 
-			self.UpperThresholdLabel=Label(self, text="upper Threshold").grid(row=SetRow, column=3)
-			self.sliderThreshUp = Scale(self, orient='horizontal', from_=0, to=255, length=slider_Length, command=self.update)
-			self.sliderThreshUp.grid(row=SetRow, column=4, columnspan=2)
-			self.sliderThreshUp.set(guiCommands['threshUp'])
+			self.UpperThresholdLabel=Label(self, text="average correction").grid(row=SetRow, column=3)
+			self.sliderAverageCorrection = Scale(self, orient='horizontal', from_=0, to=1, resolution=0.1, length=slider_Length, command=self.update)
+			self.sliderAverageCorrection.grid(row=SetRow, column=4, columnspan=2)
+			self.sliderAverageCorrection.set(guiCommands['averageCorrection'])
 
 			self.RadioVar= IntVar()
 			self.RadioHSV=Radiobutton(self,text="Use HSV",variable=self.RadioVar,value=0,command=self.ReadRadio)
@@ -96,23 +96,25 @@ class Window(Frame):
 			SetRow+=1
 			SetCol=0
 			self.previousPicText=StringVar()
-			Button(self, textvariable=self.previousPicText, command=self.previousPicSwitch).grid(row=SetRow, column=SetCol,columnspan=1)
-			self.previousPicText.set("Previous Pic")
+			Button(self, text="Previous Pic", command=self.previousPicSwitch).grid(row=SetRow, column=SetCol,columnspan=1)
+			SetCol+=1
+			Button(self, text="-10 Pic", command=self.previousTenPicSwitch).grid(row=SetRow, column=SetCol,columnspan=1)
 			SetCol+=1
 			self.nextPicText=StringVar()
-			Button(self, textvariable=self.nextPicText, command=self.nextPicSwitch).grid(row=SetRow, column=SetCol,columnspan=1)
-			self.nextPicText.set("Next Pic")
+			Button(self, text="Next Pic", command=self.nextPicSwitch).grid(row=SetRow, column=SetCol,columnspan=1)
 			SetCol+=1
-			Button(self, text="Save Settings", command=self.save).grid(row=SetRow, column=SetCol,columnspan=2)
-			SetCol+=2
+			Button(self, text="+10 Pic", command=self.nextTenPicSwitch).grid(row=SetRow, column=SetCol,columnspan=1)
+			SetCol+=1
+			Button(self, text="Save Settings", command=self.save).grid(row=SetRow, column=SetCol,columnspan=1)
+			SetCol+=1
 			Button(self, text="Convert All", command=self.convertAll).grid(row=SetRow, column=SetCol,columnspan=1)
 			SetCol+=1
 			Button(self, text="Save Picture", command=self.savePic).grid(row=SetRow, column=SetCol,columnspan=1)
 			SetCol+=1
 			#SetRow+=1
 			#SetCol=0
-			Button(self, text="Select Folder", command=self.selectFolder).grid(row=SetRow, column=SetCol,columnspan=2)
-			SetCol+=2
+			Button(self, text="Select Folder", command=self.selectFolder).grid(row=SetRow, column=SetCol,columnspan=1)
+			SetCol+=1
 			Button(self, text="Exit", command=self.client_exit).grid(row=SetRow, column=SetCol,columnspan=1)
 			
 			#self.settingsText=StringVar()
@@ -138,23 +140,26 @@ class Window(Frame):
 		print("Select Folder")
 		folderName= filedialog.askdirectory()
 		guiCommands['imageFolder']=folderName
+		guiCommands['mode']="nextPic"
 		print("folder: ",folderName)
 
 	def nextPicSwitch(self):
 		guiCommands['mode']="nextPic"
-		print("Mode: ",guiCommands['mode'])
+
+	def nextTenPicSwitch(self):
+		guiCommands['mode']="nextTenPic"
 	
 	def savePic(self):
 		guiCommands['mode']="savePic"
-		print("Mode: ",guiCommands['mode'])
 
 	def convertAll(self):
 		guiCommands['mode']="convertAll"
-		print("Mode: ",guiCommands['mode'])
 	
 	def previousPicSwitch(self):
 		guiCommands['mode']="previousPic"
-		print("Mode: ",guiCommands['mode'])
+	
+	def previousTenPicSwitch(self):
+		guiCommands['mode']="previousTenPic"
 
 	def update(self,value):
 		guiCommands['hValueL']=self.sliderHdown.get()
@@ -163,7 +168,7 @@ class Window(Frame):
 		guiCommands['hValueH']=self.sliderHup.get()
 		guiCommands['sValueH']=self.sliderSup.get()
 		guiCommands['vValueH']=self.sliderVup.get()
-		guiCommands['threshUp']=self.sliderThreshUp.get()
+		guiCommands['threshUp']=self.sliderAverageCorrection.get()
 		guiCommands['threshLow']=self.sliderThreshLow.get()
 
 	def ReadRadio(self):

@@ -47,7 +47,7 @@ while(guiCommands['runLoop']):
 			else:
 				maskedImage, previewImage, alphaImageCropped = computeImagesThreshold(inputImage, guiCommands['threshLow'], guiCommands['threshUp'])
 			show_smaller_image(maskedImage,'HSVmasked '+str(fileName),preview_scale_factor,950,0)
-			#show_smaller_image(inputImage,'input '+str(fileName),preview_scale_factor)
+			show_smaller_image(inputImage,'Raw '+str(fileName),preview_scale_factor,1400,0)
 			show_smaller_image(previewImage,'alpha Image Cropped '+str(fileName),preview_scale_factor,0,250)
 			cv2.waitKey(1)
 		
@@ -62,7 +62,7 @@ while(guiCommands['runLoop']):
 				if guiCommands['useThresh']==0:
 					maskedImage, previewImage, alphaImageCropped = computeImagesHSV(inputImage, light_color, dark_color)
 				else:
-					maskedImage, previewImage, alphaImageCropped = computeImagesThreshold(inputImage, guiCommands['threshLow'], guiCommands['threshUp'])
+					maskedImage, previewImage, alphaImageCropped = computeImagesThreshold(inputImage, guiCommands['threshLow'], guiCommands['averageCorrection'])
 				cv2.imwrite(imageFolder+saveName,maskedImage)
 				cv2.imwrite(imageFolder+saveNameAlpha,alphaImageCropped)
 			if guiCommands['mode']=='convertAll':
@@ -78,8 +78,14 @@ while(guiCommands['runLoop']):
 		elif guiCommands['mode']=='previousPic':
 			i-=1
 			guiCommands['mode']='show'
+		elif guiCommands['mode']=='previousTenPic':
+			i-=10
+			guiCommands['mode']='show'
 		elif guiCommands['mode']=='nextPic':
 			i+=1
+			guiCommands['mode']='show'
+		elif guiCommands['mode']=='nextTenPic':
+			i+=10
 			guiCommands['mode']='show'
 		
 		cv2.destroyAllWindows()
